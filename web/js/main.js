@@ -1,6 +1,6 @@
 // Include app dependency on ngMaterial 
 
-var app = angular.module( 'HausGertrud', ['ngMaterial', 'as.sortable']);
+var app = angular.module('PlaylistApp', ['ngMaterial', 'as.sortable']);
 
 
 app.controller("MainController", function ($scope, state, dateFilter) {

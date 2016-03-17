@@ -1,13 +1,13 @@
 {
-  "name": "HausGertrud",
+  "name": "Playlist-App",
   "version": "1.0.0",
-  "description": "Multi-Playlisten-Tool",
+  "description": "Multi Playlist Tool",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Carl-Philip Hänsch",
-  "license": "commercial",
+  "license": "MIT",
   "dependencies": {
     "express": "~4.13.3",
     "formidable": "~1.0.17",
