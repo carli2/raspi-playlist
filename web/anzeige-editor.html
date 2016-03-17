@@ -1,0 +1,84 @@
+<div layout="column">
+	<div layout="row" layout-align="start center">
+		<md-input-container>
+			<label>Load draft ...</label>
+			<md-select ng-model="xdraft" ng-change="vorlage(xdraft)">
+				<md-option ng-value="value" ng-repeat="(key, value) in drafts">{{ key }}</md-option>
+			</md-select>
+		</md-input-container>
+		<md-button class="md-raised" ng-click="vorlage(false)">save draft</md-button>
+		<md-button class="md-raised" ng-click="vorlage(xdraft, true)">remove draft</md-button>
+	</div>
+	<md-input-container>
+		<label>Title</label>
+		<input ng-model="ngModel.title">
+	</md-input-container>
+
+	<span>Text and table columns can be marked *<b>bold</b>*. You can also use horizontal lines with ---.</span>
+
+	<md-input-container ng-if="!ngModel.table">
+		<label>Text</label>
+		<textarea ng-model="ngModel.text"></textarea>
+	</md-input-container>
+
+	<md-input-container ng-if="ngModel.text">
+		<label>Author or source</label>
+		<input ng-model="ngModel.author">
+	</md-input-container>
+
+	<md-input-container ng-if="!ngModel.table">
+		<label>Image-URL</label>
+		<input ng-model="ngModel.img">
+	</md-input-container>
+
+	<div ng-if="!ngModel.img && !ngModel.text">
+		<md-button class="md-raised md-warn" ng-if="ngModel.table" ng-click="ngModel.table = undefined;">remove table</md-button>
+		<md-button class="md-raised" ng-click="ngModel.table = [];">empty table</md-button>
+		<br/>
+		<table ng-if="ngModel.table" style="width: 100%;">
+			<tr ng-repeat="row in ngModel.table">
+				<td ng-repeat="col in row track by $index">
+					<md-input-container flex>
+						<label>Cell content</label>
+						<textarea ng-model="row[$index]"></textarea>
+					</md-input-container>
+				</td>
+				<td>
+					<md-button class="md-raised md-warn" ng-click="ngModel.table.splice($index, 1)">remove row</md-button>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<md-button class="md-raised" ng-click="ngModel.table.push(['Zeile', '---'])">add row</md-button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<md-input-container ng-if="ngModel.table || ngModel.img">
+		<label>subtitle for table or image</label>
+		<input ng-model="ngModel.subtitle">
+	</md-input-container>
+
+	<md-input-container>
+		<label>warning text at bottom</label>
+		<input ng-model="ngModel.warning">
+	</md-input-container>
+
+    <div layout="row">
+        <md-button class="md-raised md-primary" ng-click="update()">
+            refresh preview
+        </md-button>
+        <a ng-href="{{ getJSON() }}" md-button class="md-raised md-primary">
+            download as image
+        </a>
+        <md-button class="md-raised md-primary" ng-click="add()">
+            add to playlist
+        </md-button>
+    </div>
+
+	<div style="transform: scale(0.5); transform-origin: 0 0;">
+		<iframe ng-src="{{ url }}" style="width: 1920px; height: 1080px; border: 2px solid black;">
+		</iframe>
+	</div>
+</div>

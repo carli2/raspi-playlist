@@ -1,0 +1,38 @@
+<h1>{{ ngModel.name }}</h1>
+<md-input-container>
+	<label>Title</label>
+	<input ng-model="ngModel.name" ng-model-options="{debounce: 300}" ng-change="state.save()">
+</md-input-container>
+<md-toolbar layout="row">
+	<md-button class="md-raised md-primary" ng-click="activatePlaylist($event)"><md-icon>play_arrow</md-icon> activate</md-button>
+	<md-button class="md-raised md-warn" ng-click="removePlaylist($event)">remove playlist</md-button>
+</md-toolbar>
+<div as-sortable ng-model="ngModel.files">
+	<md-card ng-repeat="i in ngModel.files" as-sortable-item ng-init="file = state.data.files[i]">
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline" as-sortable-item-handle>{{ file.name }}</span>
+				<span class="md-subhead">Type: {{ file.type }}</span>
+			</md-card-title-text>
+			<md-card-title-media>
+				<div class="md-media-lg card-media"><img ng-if="file.type.startsWith('image')" ng-src="/playlist/public.php?id={{i}}"></div>
+			</md-card-title-media>
+		</md-card-title>
+		<md-card-content>
+			Größe: {{ file.size / 1024 / 1024 | number:1 }} MiB<br/>
+			<a ng-href="/playlist/public.php?id={{i}}" target="_blank">Download media file</a>
+		</md-card-content>
+		<md-card-actions layout="row" layout-align="end center">
+			<md-button class="md-warn" ng-click="removeFromPlaylist(i, $event)">delete</md-button>
+		</md-card-actions>
+	</md-card>
+	<h3>Upload raw data into playlist (Images, Videos)</h3>
+	<form action="/uploadFiles" method="post" enctype="multipart/form-data" target="iframe">
+		<input type="hidden" name="playlist" ng-value="ngModel.id">
+		<input type="file" multiple="multiple" name="uploadedImages"/><br/>
+		<input type="submit" value="Upload" />
+	</form>
+	<iframe name="iframe" id="iframe" onload="uploadDone()" style="width: 0px; height: 0px; visibility: hidden;"></iframe>
+	<h3>Add text with corporate design</h3>
+	<anzeige-editor ng-model="neu_anzeige" add="addAnzeige(neu_anzeige)" save="state.save()" drafts="state.data.drafts"></anzeige-editor>
+</div>

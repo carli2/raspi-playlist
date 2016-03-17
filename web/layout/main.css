@@ -1,0 +1,145 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Serif:700);
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+img{
+    max-width: 100%;
+}
+
+.wrapper{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.vertical_center{
+    height: 900px;
+}
+
+.mid{
+    position: relative;
+    top: 50%;
+    transform: translateY(-51%);
+    -webkit-transform: translateY(-51%);
+}
+
+.page_headline{
+    font-family: 'PT Serif', serif;
+    text-align: center;
+    font-size: 67px;
+    margin: 30px 0;
+}
+
+.subtitle{
+    font-size: 20px;
+    text-align: center;
+    color: rgb(69, 69, 69);
+}
+
+.warning{
+    text-align: center;
+    color: rgb(69, 69, 69);
+}
+
+table{
+    margin: 0 auto;
+    font-size: 45px;
+    border-collapse: separate;
+    border-spacing: 8px;
+    text-align: center;
+}
+
+tr:first-child td{
+    border-top: 2px solid #37271e;
+}
+
+td:first-child{
+    width: 280px;
+    height: 90px;
+    padding: 8px;
+    font-size: 34px;
+}
+
+td:nth-child(2){
+    font-size: 30px;
+    padding-left: 24px;
+    border-bottom: 2px solid #37271e;
+}
+
+.article{
+    padding: 20px 0;
+    margin-top: 50px;
+    border-top: 1px solid #37271e;
+    border-bottom: 1px solid #37271e;
+}
+
+.text{
+    font-size: 30px;
+    text-align: justify;
+    -moz-text-align-last: center;
+    text-align-last: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.author{
+    font-size: 20px;
+    font-style: italic;
+    color: rgb(69, 69, 69);
+    width: 80%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+.two_block{
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+.two_block .left,
+.two_block .right{
+    width: 48%;
+    max-height: 500px;
+}
+
+.two_block img{
+    max-width: 90%;
+    display: block;
+    margin: 0 auto;
+}
+
+.left{
+    float: left;
+}
+
+.right{
+    float: right;
+}
+
+.image{
+    width: 100%;
+    height: 100%;
+}
+
+.image img{
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.image_src{
+    width: 100%;
+    height: 840px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.image_subtitle{
+    font-size: 24px;
+    font-style: italic;
+    color: rgb(69, 69, 69);
+    max-width: 100%;
+    text-align: center;
+}

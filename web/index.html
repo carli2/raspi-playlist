@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="angular-material/angular-material.css">
+	<link rel="stylesheet" type="text/css" href="angular-sortable/ng-sortable.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<title>Anzeigesteuerung</title>
+</head>
+<body ng-app="HausGertrud" ng-controller="MainController" layout="row">
+	<md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="true">
+		<md-toolbar>
+			<h2>Playlists</h2>
+		</md-toolbar>
+		<md-list layout="column">
+			<md-list-item class="md-toolbar-tools-bottom inset" ng-repeat="(id, list) in state.data.playlists">
+				<md-item-content ng-click="editor.activeList = id" md-button>
+					{{ list.name }} ({{ list.files.length }})
+					<md-icon ng-if="state.data.currentPlaylist == id">play_arrow</md-icon>
+					<md-icon ng-if="editor.activeList == id">edit</md-icon>
+				</md-item-content>
+			</md-list-item>
+			<md-list-item class="md-toolbar-tools-bottom inset md-primary">
+				<md-item-content ng-click="editor.activeList = 'new'" md-button><md-icon>add</md-icon> Create new playlist</md-item-content>
+			</md-list-item>
+		</md-list>
+	</md-sidenav>
+	<md-content flex="70" layout-padding>
+		<div ng-if="state.data.playlists[editor.activeList]">
+			<list-view ng-model="state.data.playlists[editor.activeList]" layout="column"></list-view>
+		</div>
+		<div ng-if="!state.data.playlists[editor.activeList]">
+			<h1>Click on a playlist on the left side to edit it.</h1>
+			<h1>Create new playlist</h1>
+			<md-input-container>
+				<label>Title</label>
+				<input ng-model="editor.newName">
+			</md-input-container>
+			<md-button class="md-raised md-primary" ng-click="createPlaylist(editor.newName)">
+				create playlist
+			</md-button>
+		</div>
+	</md-content>
+
+	<script src="js/angular/angular.js"></script>
+	<script src="angular-aria/angular-aria.js"></script>
+	<script src="angular-animate/angular-animate.js"></script>
+	<script src="angular-material/angular-material.js"></script>
+	<script type="text/javascript" src="angular-sortable/ng-sortable.min.js"></script>
+
+	<script src="js/main.js"></script> 
+
+</body>
+</html>

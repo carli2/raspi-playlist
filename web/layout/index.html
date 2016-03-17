@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML Layout</title>
+        <link rel="stylesheet" href="main.css" type="text/css" />
+        <script type="text/javascript" src="angular.min.js"></script>
+        <script type="text/javascript">
+            var app = angular.module('layout', []);
+
+            app.controller('MainController', function ($scope, $timeout) {
+                var testcases = [];
+
+                // Layout 1: Tabelle (Speiseplan)
+                testcases.push({title: 'Speiseplan vom 21.01. - 25.01.2016', table: [
+                    ['Donnerstag 21.01.', '---'],
+                    ['Freitag 22.01.', '---'],
+                    ['Samstag 23.01.', '*Gefüllte Paprikaschoten mit Reis*\nan Paprikarahmsoße, dazu Chemnitzer Salatmischung;\nPfirsichkompott'],
+                    ['Sonntag 24.01.', '*Gulasch mit Böhmischen Knödeln*\nund Sauerkraut;\nSchwedenspeise'],
+                    ['Montag 22.01.', '---']
+                ], subtitle: 'Zusatzstoffe und Allergene sind in der Küche zu erfragen', warning: 'Änderungen vorbehalten!'});
+
+                // Layout 2: Text
+                testcases.push({title: 'Wichtige Information', text: 'Der Whirlpool ist heute nur bis 20:00 geöffnet'});
+
+                // Layout 3: Zitat
+                testcases.push({title: 'Jahreslosung 2016', text: 'Gott spricht: Ich will euch trösten, wie einen seine Mutter tröstet.', author: 'Jesaja 61,13'});
+
+                // Layout 4: Bild+Text
+                testcases.push({title: 'Der Oybin', img: 'http://photos.wikimapia.org/p/00/01/41/88/70_big.jpg', subtitle: 'Oybin', text: 'Der Oybin ist ein Berg, der 1240 v.Chr. von den Römern erbaut wurde. Im Laufe der Zeit wurde er mehrmals abgerissen und wiederaufgebaut.'});
+
+                // Layout 5: Bild
+                testcases.push({title: 'Haus Gertrud', img: 'https://www.gruppenunterkuenfte.de/img-gruppenhaus/h600px/Christliche-Ferienstaette-Haus-Gertrud__i5540.jpg', subtitle: 'Unser Ferienheim'});
+
+                var idx = 0, durance = 0;
+                function swapLayout() {
+                    if (location.hash.split('#')[1]) {
+                        // Hashtag angegeben
+                        $scope.content = JSON.parse(unescape(location.hash.split('#')[1]));
+                    } else {
+                        // Sonst: Testcases
+                        if (durance > 0) {
+                            durance--;
+                        } else {
+                            $scope.content = testcases[idx];
+                            idx = (idx + 1) % testcases.length;
+                            durance = 10;
+                        }
+                    }
+                    $timeout(swapLayout, 400);
+                }
+                swapLayout();
+            });
+
+            app.filter('markup', function ($sce) {
+                return function (x) {
+                    // HTML-Entities
+                    x = x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    // Zeilenumbrüche
+                    x = x.replace(/\n/g, '<br/>');
+                    // Fett
+                    x = x.replace(/\*(.*?)\*/g, '<b>$1</b>');
+                    // Linien
+                    x = x.replace(/---/g, '<hr/>');
+                    return $sce.trustAsHtml(x);
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div class="wrapper" ng-app="layout" ng-controller="MainController">
+            <!-- CONTENT -->
+            <h1 class="page_headline">{{ content.title }}</h1>
+            <div class="vertical_center">
+                <div class="mid">
+                    <div class="table" ng-if="content.table">
+                        <table>
+                            <tr ng-repeat="row in content.table">
+                                <td ng-repeat="col in row track by $index"><span ng-bind-html="col | markup"></span></td>
+                            </tr>
+                        </table>
+                        <div class="subtitle" ng-if="content.subtitle">
+                            {{ content.subtitle }}
+                        </div>
+                    </div>
+                    <div class="article" ng-if="content.text && !content.img">
+                        <div class="text" ng-bind-html="content.text | markup"></div>
+                        <div class="author" ng-if="content.author">
+                            {{ content.author }}
+                        </div>
+                    </div>
+                    <div class="two_block" ng-if="content.text && content.img">
+                        <div class="left mid">
+                            <img ng-src="{{ content.img }}" />
+                            <div class="image_subtitle" ng-if="content.subtitle" ng-bind-html="content.subtitle | markup"></div>
+                        </div>
+                        <div class="right mid" ng-bind-html="content.text | markup"></div>
+                    </div>
+                    <div class="image" ng-if="content.img && !content.text">
+                        <div class="image_src" ng-style="{'background-image': 'url(' + content.img + ')'}"></div>
+                        <div class="image_subtitle" ng-if="content.subtitle" ng-bind-html="content.subtitle | markup"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="warning" ng-if="content.warning">
+                {{ content.warning }}
+            </div>
+        </div>
+    </body>
+</html>
