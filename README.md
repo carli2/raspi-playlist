@@ -4,6 +4,10 @@
 
 Watch it in youtube: https://www.youtube.com/watch?v=9PPs46tMqFo
 
+[![Launix Videobox introducery video](http://img.youtube.com/vi/jDpMd47FJgM/0.jpg)](http://www.youtube.com/watch?v=jDpMd47FJgM)
+
+Watch it in youtube: https://www.youtube.com/watch?v=jDpMd47FJgM
+
 ## Historical background
 
 ![Raspberry Pi Playlist at Haus Hertrud in Jonsdorf/Germany](ergebnis.png)
